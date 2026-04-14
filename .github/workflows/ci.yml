@@ -1,0 +1,63 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-helm:
+    name: Validate Helm Charts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+
+      - name: Validate Helm Charts
+        run: |
+          helm lint apps/nodejs-app/
+      - name: Template Helm chart
+        run: |
+          helm template nodejs-app apps/nodejs-app/ \
+            --values apps/nodejs-app/values.yaml
+
+  validate-k8s:
+    name: Validate Kubernetes Manifests
+    runs-on: ubuntu-latest
+    needs: validate-helm
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Install kubeval
+        run: |
+          wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
+          tar xf kubeval-linux-amd64.tar.gz
+          sudo mv kubeval /usr/local/bin
+      - name: Render and Validate Kubernetes Manifests
+        run: |
+          helm template nodejs-app apps/nodejs-app/ \
+            --values apps/nodejs-app/values.yaml > rendered.yaml
+          kubeval rendered.yaml --strict
+  
+  validate-argocd:
+    name: Validate ArgoCD Application
+    runs-on: ubuntu-latest
+    needs: validate-helm  
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Validate ArgoCD Application
+        run: |
+          kubectl apply --dry-run=client -f infrastructure/argocd/application.yaml

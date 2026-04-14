@@ -1,0 +1,13 @@
+grafana:
+  enabled: true
+  adminPassword: "devops1234"
+  service:
+    type: ClusterIP
+
+prometheus:
+  enabled: true
+  service:
+    type: ClusterIP
+
+alertmanager:
+  enabled: true

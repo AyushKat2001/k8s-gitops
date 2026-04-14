@@ -1,0 +1,29 @@
+replicaCount: 2
+
+image:
+  repository: ayush272001/nodejs-app
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: false
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi  
+
+autoscaling:
+  enabled: false
+
+env:
+  - name: NODE_ENV
+    value: "production"
