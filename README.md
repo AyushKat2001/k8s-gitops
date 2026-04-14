@@ -137,10 +137,11 @@ kubectl apply -f infrastructure/argocd/application.yaml
 
 ArgoCD will detect your GitHub repo and sync the app to the `production` namespace automatically.
 
+-- <b>Before Sync</b>
 ![ArgoCD](screenshots/non-sync.png)
 
 -------------------------------------------------------------------------
-
+-- <b>After Sync</b>
 ![ArgoCD](screenshots/synced.png)
 
 **5. Install Prometheus + Grafana**
