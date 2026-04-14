@@ -5,7 +5,7 @@
 **A production-style Kubernetes setup where Git is the single source of truth.**
 Every change merged to main automatically syncs to the cluster via ArgoCD — no manual `kubectl apply` ever.
 
-![CI Pipeline](https://github.com/ayush272001/k8s-gitops/actions/workflows/ci.yml/badge.svg)
+![CI Pipeline](screenshots/pipeline.png)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)
 ![ArgoCD](https://img.shields.io/badge/ArgoCD-EF7B4D?style=flat&logo=argo&logoColor=white)
 ![Helm](https://img.shields.io/badge/Helm-0F1689?style=flat&logo=helm&logoColor=white)
