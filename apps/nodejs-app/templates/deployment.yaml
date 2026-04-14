@@ -23,22 +23,22 @@ spec:
           env:
             - name: NODE_ENV
               value: {{ .Values.env.NODE_ENV }}
-            resources:
-              limits:
-                cpu: {{ .Values.resources.limits.cpu }}
-                memory: {{ .Values.resources.limits.memory }}
-              requests:
-                cpu: {{ .Values.resources.requests.cpu }}
-                memory: {{ .Values.resources.requests.memory }}
-            livenessProbe:
-              httpGet:
-                path: /health
-                port: {{ .Values.service.targetPort }}
-              initialDelaySeconds: 30
-              periodSeconds: 10
-            readinessProbe:
-              httpGet:
-                path: /health
-                port: {{ .Values.service.targetPort }}
-              initialDelaySeconds: 5
-              periodSeconds: 5
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.targetPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
