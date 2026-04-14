@@ -5,10 +5,10 @@ metadata:
     labels:
         app: {{ .Chart.Name }}
 spec:
-  type: {{ .values.service.type }}
+  type: {{ .Values.service.type }}
   selector:
     app: {{ .Chart.Name }}
   ports:
     - protocol: TCP
-      port: {{ .values.service.port }}
-      targetPort: {{ .values.service.targetPort }}
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}

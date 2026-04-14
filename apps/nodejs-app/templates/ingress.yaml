@@ -17,4 +17,4 @@ spec:
               service:
                 name: {{ .Chart.Name }}-service
                 port:
-                  number: {{ .values.service.port }}
+                  number: {{ .Values.service.port }}
