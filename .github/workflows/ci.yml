@@ -64,6 +64,4 @@ jobs:
 
         - name: Validate ArgoCD Application
           run: |
-            kubeconform infrastructure/argocd/application.yaml \
-                -strict \
-                -ignore-missing-schemas
+            kubeconform -strict -ignore-missing-schemas infrastructure/argocd/application.yaml
