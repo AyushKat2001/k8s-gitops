@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ .Chart.Name }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Chart.Name }}
@@ -16,29 +16,29 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .values.image.repository }}:{{ .values.image.tag }}"
+          imagePullPolicy: {{ .values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.service.targetPort }}
+            - containerPort: {{ .values.service.targetPort }}
           env:
             - name: NODE_ENV
-              value: {{ .Values.env.value }}
+              value: {{ .values.env.value }}
             resources:
               limits:
-                cpu: {{ .Values.resources.limits.cpu }}
-                memory: {{ .Values.resources.limits.memory }}
+                cpu: {{ .values.resources.limits.cpu }}
+                memory: {{ .values.resources.limits.memory }}
               requests:
-                cpu: {{ .Values.resources.requests.cpu }}
-                memory: {{ .Values.resources.requests.memory }}
+                cpu: {{ .values.resources.requests.cpu }}
+                memory: {{ .values.resources.requests.memory }}
             livenessProbe:
               httpGet:
                 path: /health
-                port: {{ .Values.service.targetPort }}
+                port: {{ .values.service.targetPort }}
               initialDelaySeconds: 30
               periodSeconds: 10
             readinessProbe:
               httpGet:
                 path: /health
-                port: {{ .Values.service.targetPort }}
+                port: {{ .values.service.targetPort }}
               initialDelaySeconds: 5
               periodSeconds: 5
