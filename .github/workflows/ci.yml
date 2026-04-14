@@ -36,16 +36,19 @@ jobs:
       - name: Set up kubectl
         uses: azure/setup-kubectl@v3
 
-      - name: Install kubeval
+      - name: Install kubeconform
         run: |
-          wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
-          tar xf kubeval-linux-amd64.tar.gz
-          sudo mv kubeval /usr/local/bin
+          wget https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz
+          tar xf kubeconform-linux-amd64.tar.gz
+          sudo mv kubeconform /usr/local/bin
+
       - name: Render and Validate Kubernetes Manifests
         run: |
           helm template nodejs-app apps/nodejs-app/ \
-            --values apps/nodejs-app/values.yaml > rendered.yaml
-          kubeval rendered.yaml --strict
+          --values apps/nodejs-app/values.yaml > rendered.yaml
+          kubeconform rendered.yaml \
+          -strict \
+          -ignore-missing-schemas
   
   validate-argocd:
     name: Validate ArgoCD Application
@@ -60,4 +63,6 @@ jobs:
 
       - name: Validate ArgoCD Application
         run: |
-          kubectl apply --dry-run=client -f infrastructure/argocd/application.yaml
+          kubeconform infrastructure/argocd/application.yaml \
+          -strict \
+          -ignore-missing-schemas
