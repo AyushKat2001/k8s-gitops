@@ -22,7 +22,7 @@ spec:
             - containerPort: {{ .Values.service.targetPort }}
           env:
             - name: NODE_ENV
-              value: {{ .Values.env.value }}
+              value: {{ .Values.env.NODE_ENV }}
             resources:
               limits:
                 cpu: {{ .Values.resources.limits.cpu }}

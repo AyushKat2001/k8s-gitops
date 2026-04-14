@@ -25,5 +25,4 @@ autoscaling:
   enabled: false
 
 env:
-  - name: NODE_ENV
-    value: "production"
+  NODE_ENV: production
