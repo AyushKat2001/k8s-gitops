@@ -5,12 +5,7 @@
 **A production-style Kubernetes setup where Git is the single source of truth.**
 Every change merged to main automatically syncs to the cluster via ArgoCD — no manual `kubectl apply` ever.
 
-![CI Pipeline](screenshots/pipeline.png)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)
-![ArgoCD](https://img.shields.io/badge/ArgoCD-EF7B4D?style=flat&logo=argo&logoColor=white)
-![Helm](https://img.shields.io/badge/Helm-0F1689?style=flat&logo=helm&logoColor=white)
-![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=flat&logo=prometheus&logoColor=white)
-![Grafana](https://img.shields.io/badge/Grafana-F46800?style=flat&logo=grafana&logoColor=white)
+![pic](screenshots/diagram.png)
 
 </div>
 
@@ -142,6 +137,12 @@ kubectl apply -f infrastructure/argocd/application.yaml
 
 ArgoCD will detect your GitHub repo and sync the app to the `production` namespace automatically.
 
+![ArgoCD](screenshots/non-sync.png)
+
+-------------------------------------------------------------------------
+
+![ArgoCD](screenshots/synced.png)
+
 **5. Install Prometheus + Grafana**
 
 ```bash
@@ -185,6 +186,8 @@ Within 3 minutes ArgoCD detects the change and scales the deployment automatical
 kubectl get pods -n production
 ```
 
+![Kubernetes](screenshots/pods.png)
+
 ---
 
 ## 📋 CI Pipeline
@@ -212,6 +215,8 @@ The GitHub Actions workflow runs on every push and PR to `main`. It validates yo
 
 > The goal: never merge broken Kubernetes config into main. ArgoCD would immediately try to deploy it and break the cluster.
 
+![CI Pipeline](screenshots/pipeline.png)
+
 ---
 
 ## 📊 Monitoring
@@ -222,6 +227,8 @@ Prometheus scrapes metrics from every pod automatically. Grafana comes pre-confi
 - Node health and resource pressure
 - Deployment rollout status
 - Network traffic in and out
+
+![Grafana](screenshots/metrics.png)
 
 ---
 
